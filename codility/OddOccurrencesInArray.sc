@@ -16,13 +16,12 @@
 object Solution { 
   def solution(a: Array[Int]): Int = {
     if (a.length == 0) throw new Exception("input array error: expected N>1")
-    // if (a.length % 2 == 0) throw new Exception("input array error: odd number of items expected")
+    if (a.length % 2 == 0) throw new Exception("input array error: odd number of items expected, even provided")
     if (a.length == 1) {
         a(0)
     } else {
         var unpaired = a(0)
-        for (i <- 0 to (a.length-1)) { 
-          // println(a(i), unpaired, i)
+        for (i <- 1 to (a.length-1)) {
           unpaired = unpaired ^ a(i) 
         }
         unpaired
@@ -34,14 +33,14 @@ import $ivy.`org.scalatest::scalatest:3.0.5`
 import org.scalatest._
 class SolutionSpec extends FunSuite with Matchers {
   // original spec:
-  test("original (9,3,3,9,7,9) -> 7") {
-    Solution.solution(Array[Int](9, 3, 3, 9, 7, 9)) should equal(7)
+  test("original (9, 3, 9, 3, 9, 7, 9) -> 7") {
+    Solution.solution(Array[Int](9, 3, 9, 3, 9, 7, 9)) should equal(7)
   }
-  test("in another place (9, 3, 3, 9, 9, 7) -> 7") {
-    Solution.solution(Array[Int](9, 3, 3, 9, 9, 7)) should equal(7)
+  test("last position (9, 3, 3, 9, 9, 1) -> 1") {
+    Solution.solution(Array[Int](1, 9, 3, 9, 3, 9, 9)) should equal(1)
   }
-  test("in another place (7, 9, 3, 3, 9, 9) -> 7") {
-    Solution.solution(Array[Int](7, 9, 3, 3, 9, 9)) should equal(7)
+  test("first position (2, 9, 3, 9, 3, 9, 9) -> 2") {
+    Solution.solution(Array[Int](2, 9, 3, 9, 3, 9, 9)) should equal(2)
   }
 }
 (new SolutionSpec).execute
